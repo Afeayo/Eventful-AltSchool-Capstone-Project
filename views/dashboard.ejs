@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F5F5F5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #0081A7;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 1em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5em;
+            margin-bottom: 2em;
+            text-align: center;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 1em 0;
+            width: 100%;
+            text-align: center;
+            padding: 0.5em 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #00AFB9;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5em;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        main {
+            margin-left: 250px;
+            padding: 2em;
+            flex-grow: 1;
+            background-color: #FFF;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+
+        header {
+            background-color: #F07167;
+            color: white;
+            padding: 1em;
+            border-radius: 8px;
+            margin-bottom: 2em;
+            text-align: center;
+        }
+
+        section {
+            background-color: #FED9B7;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5em;
+            margin-bottom: 2em;
+        }
+
+        section h2 {
+            color: #0081A7;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        section h3 {
+            color: #F07167;
+            font-size: 1.2em;
+            margin-top: 1em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 0.75em;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #00AFB9;
+            color: white;
+        }
+
+        table td {
+            background-color: #FED9B7;
+            color: #333;
+        }
+
+        footer {
+            background-color: #0081A7;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            width: calc(100% - 250px);
+            bottom: 0;
+            left: 250px;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-250px);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            main {
+                margin-left: 0;
+                padding: 1em;
+            }
+
+            footer {
+                width: 100%;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hamburger">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <div class="sidebar">
+        <h1>Welcome, <%= user.name %></h1>
+        <a href="/creator/myEvents"><i class="fas fa-tachometer-alt"></i> My Events</a>
+        <a href="/creator/create-event"><i class="fas fa-edit"></i> Create Event</a>
+        <a href="/creator/reminders"><i class="fas fa-bell"></i> Set Reminder</a>
+        <a href="/api/auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+    
+    <main>
+        <header>
+            <h1>Dashboard Overview</h1>
+        </header>
+        
+        <section class="dashboard-overview">
+            <h2><i class="fas fa-calendar-alt"></i> Latest Event</h2>
+            <% if (latestEvent) { %>
+                <p><strong>Event Name:</strong> <%= latestEvent.title %></p>
+                <p><strong>Date:</strong> <%= latestEvent.date.toDateString() %></p>
+                <p><strong>Description:</strong> <%= latestEvent.description %></p>
+                <p><strong>Price:</strong> <%= latestEvent.price %></p>
+                <p><strong>Reminder Set:</strong> <%= latestEvent.reminder ? 'Yes' : 'No' %></p>
+                <p><button onclick="window.open('<%= latestEvent.shareableLink %>', '_blank')"style="color: #0081A7;"><i class="fas fa-share-alt"></i> Share Event</a></p>
+
+            <% } else { %>
+                <p>You haven't organized any events yet.</p>
+            <% } %>
+        </section>
+
+        <section class="analytics">
+            <h2><i class="fas fa-chart-bar"></i> Analytics</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Total Attendees</th>
+                        <th>Total Tickets Sold</th>
+                        <th>QR Code Scans</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tbody>
+                        <% analytics.forEach(event => { %>
+                            <tr>
+                                <td><%= event.title %></td> <!-- Display event name -->
+                                <td><%= event.totalAttendees %></td>
+                                <td><%= event.totalTicketsSold %></td>
+                                <td><%= event.totalQRScans %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                    
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <% if (currentPage > 1) { %>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<%= currentPage - 1 %>">Previous</a>
+                    </li>
+                <% } %>
+        
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                        <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                    </li>
+                <% } %>
+        
+                <% if (currentPage < totalPages) { %>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<%= currentPage + 1 %>">Next</a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Eventful</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= event.title %> - Event Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .event-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .event-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        .event-card img {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .buy-ticket-btn {
+            background-color: #D4AF37;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 50px;
+            transition: background-color 0.3s;
+        }
+        .buy-ticket-btn:hover {
+            background-color: #C19A31;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="event-header">
+        <h1><%= event.title %></h1>
+        <p class="text-muted">Organized by: <%= event.organizer.name %></p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card event-card">
+                <img src="/path/to/event-image.jpg" class="card-img-top" alt="<%= event.title %>">
+                <div class="card-body">
+                    <h4 class="card-title">Event Details</h4>
+                    <p class="card-text"><%= event.description %></p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <p><strong>Date:</strong> <%= new Date(event.date).toLocaleDateString() %></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Price:</strong> ₦<%= event.price %></p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <form action="/purchase-ticket" method="POST">
+                            <input type="hidden" name="eventId" value="<%= event._id %>">
+                            <button type="submit" class="btn buy-ticket-btn">Buy Ticket</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

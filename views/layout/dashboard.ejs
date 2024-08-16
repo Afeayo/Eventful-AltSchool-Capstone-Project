@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventful Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Eventful</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/events/myEvents">My Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/events/create">Create Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/auth/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-lg-2 sidebar bg-light">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/events/myEvents">My Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/events/create">Create Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/auth/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Content -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Event Summary
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Total Events</h5>
+                                <p class="card-text">You have organized <strong><%= totalEvents %></strong> events.</p>
+                                <a href="/api/events/myEvents" class="btn btn-primary">View Events</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Recent Activities
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Latest Event Created</h5>
+                                <p class="card-text">Event: <strong><%= latestEvent.name %></strong></p>
+                                <p class="card-text">Date: <%= latestEvent.date %></p>
+                                <a href="/api/events/myEvents" class="btn btn-primary">View All Activities</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts & Graphs -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Event Analytics
+                            </div>
+                            <div class="card-body">
+                                <canvas id="eventChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

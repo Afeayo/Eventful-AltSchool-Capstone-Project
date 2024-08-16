@@ -1,0 +1,8 @@
+<%- include('../layouts/main', { body: `
+    <h2>My Applications</h2>
+    <ul>
+        <% events.forEach(event => { %>
+            <li><%= event.title %> - <%= event.date.toDateString() %></li>
+        <% }) %>
+    </ul>
+` }) %>

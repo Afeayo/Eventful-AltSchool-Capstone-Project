@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventful</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <% if (!user) { %>
+                <li><a href="/api/auth/login">Login</a></li>
+                <li><a href="/api/auth/register">Register</a></li>
+                <% } else { %>
+                <li><a href="/api/events/myEvents">My Events</a></li>
+                <li><a href="/api/events/myApplications">My Applications</a></li>
+                <li><a href="/api/auth/logout">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <%- success_msg ? `<p>${success_msg}</p>` : '' %>
+        <%- error_msg ? `<p>${error_msg}</p>` : '' %>
+        <%- error ? `<p>${error}</p>` : '' %>
+        <%- body %>
+    </main>
+    <footer>
+        <p>&copy; 2024 Eventful</p>
+    </footer>
+</body>
+</html>

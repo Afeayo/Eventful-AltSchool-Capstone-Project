@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Reminder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0081A7;
+            margin-bottom: 1em;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            display: block;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 0.75em;
+            margin-bottom: 1em;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #0081A7;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005F73;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 1em;
+        }
+
+        .back-link a {
+            color: #0081A7;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-bell"></i> Set Reminder</h1>
+        <form action="/creator/reminders" method="POST">
+            <label for="eventId">Select Event</label>
+            <select name="eventId" id="eventId" required>
+                <% events.forEach(event => { %>
+                    <option value="<%= event._id %>"><%= event.title %></option>
+                <% }); %>
+            </select>
+
+            <label for="reminderDate">Reminder Date</label>
+            <input type="date" id="reminderDate" name="reminderDate" required>
+
+            <button type="submit"><i class="fas fa-save"></i> Set Reminder</button>
+        </form>
+
+        <div class="back-link">
+            <a href="/dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
