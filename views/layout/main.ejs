@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    <div class="slider-background">
+        <div class="slides">
+            <div class="slide"><img src="/images/@michealkint.JPG" alt="Slide 1"></div>
+            <div class="slide"><img src="/images/33 (273).JPG" alt="Slide 2"></div>
+            <div class="slide"><img src="/images/TQL_171A-1-2048x1365.jpg" alt="Slide 3"></div>
+            <!-- Add more slides as needed -->
+        </div>
+    </div>
     <header>
         <nav>
             <ul>
@@ -31,5 +39,32 @@
     <footer>
         <p>&copy; 2024 Eventful</p>
     </footer>
+    <script>
+        let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+    if (index >= totalSlides) {
+        slideIndex = 0;
+    } else if (index < 0) {
+        slideIndex = totalSlides - 1;
+    } else {
+        slideIndex = index;
+    }
+
+    const offset = -slideIndex * 100;
+    document.querySelector('.slides').style.transform = `translateX(${offset}%)`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    showSlide(slideIndex);
+    // Optional: Auto-slide functionality
+    setInterval(() => {
+        showSlide(slideIndex + 1);
+    }, 5000); // Change slide every 5 seconds
+});
+
+    </script>
 </body>
 </html>
