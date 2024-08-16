@@ -4,7 +4,7 @@ x-stoplight:
 info:
   title: Eventful
   version: '1.0'
-  summary: Eventful API
+  summary: 'Eventful API '
   description: "API for Eventful, a ticketing and event management platform.\r\n  version: 1.0.0"
 servers:
   - url: 'https://eventful-altschool-capstone-project.onrender.com'
